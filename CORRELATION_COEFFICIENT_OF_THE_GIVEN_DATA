@@ -1,0 +1,40 @@
+#WRITE A PROGRAM TO FIND THE CORRELATION COEFFICIENT FOR GIVEN SET OF DATA 
+import numpy as np
+#creating the two lists x and y
+l1=list(map(int,input().split()))
+x=np.array(l1)
+l2=list(map(int,input().split()))
+y=np.array(l2)
+#initial values x,y,xy,x^2,y^2 are 0
+sumx=0
+sumy=0
+sumxy=0
+sumxx=0
+sumyy=0
+n=len(x)
+xy=[0 for i in range(n)]
+xx=[0 for i in range(n)]
+yy=[0 for i in range(n)]
+#calculating the xy,x^2 and y^2 values
+for i in range(n):
+    xy[i]=x[i]*y[i]
+    xx[i]=x[i]*x[i]
+    yy[i]=y[i]*y[i]
+#calculating the total values of x,y,x^2,y^2 and xy
+for i in range(n):
+    sumx=sumx+x[i]
+    sumy=sumy+y[i]
+    sumxy=sumxy+xy[i]
+    sumxx=sumxx+xx[i]
+    sumyy=sumyy+yy[i]
+
+#mean values of x and y
+meanx=sumx/n
+meany=sumy/n
+#covariance and sigma values of x and y
+cov=((sumxy)/n)-(meanx*meany)
+sigmax=((sumxx/n)-(meanx*meanx))**0.5
+sigmay=((sumyy/n)-(meany*meany))**0.5
+#calculating the correlation coefficient value
+r=cov/(sigmax*sigmay)
+print('correlation coefficient r:',r)
