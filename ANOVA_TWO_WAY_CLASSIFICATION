@@ -1,0 +1,84 @@
+#WRITE A PROGRAM TO FIND THE ANOVA TWO WAY CLASSIFICATION
+import scipy.stats as stats
+print("Enter level of significance")
+alpha=float(input())
+print("Enter number of treatments")
+t=int(input())
+print("Enter number of blocks")
+b=int(input())
+l=[]
+ti=[]
+ti2ni=[]
+for i in range(t):
+    p=list(map(int,input().split()))
+    ti.append(sum(p))
+    ti2ni.append(sum(p)**2)
+    l.append(p)
+sti2=sum(ti2ni)
+blocks=[]
+squared_blocks=[]
+for i in range(b):
+  s=0
+  for k in range(t):
+    s+=l[k][i]
+  blocks.append(s)
+  squared_blocks.append(s**2)
+G=sum(blocks)
+sbi2=sum(squared_blocks)
+m=[]
+for i in l:
+  m.extend(i)
+rss=0
+for i in m:
+  rss+=i**2
+cf=(G**2) / len(m)
+st2=rss-cf
+str2=(sti2/b) - cf
+sb2=(sbi2/t) - cf
+se2=st2 - str2 - sb2
+dft=t-1
+dfb=b-1
+dfe=dft*dfb
+mst2=str2/dft
+msb2=sb2/dfb
+mse2=se2/dfe
+ftr=mst2/mse2
+fb=msb2/mse2
+if ftr<1.0:
+  ftr=(1.0/ftr)
+  t_ftr=stats.f.ppf(1-alpha,dfe,dft)
+  print(rss,cf,st2,str2,sb2,se2,ftr,fb)
+  print("table value for treatments")
+  print(t_ftr)
+  if ftr>t_ftr:
+    print("we reject treatments")
+  else:
+    print("we accept treatments")
+else:
+  t_ftr=stats.f.ppf(1-alpha,dft,dfe)
+  print(rss,cf,st2,str2,sb2,se2,ftr,fb)
+  print("table value for treatments")
+  print(t_ftr)
+  if ftr>t_ftr:
+    print("we reject treatments")
+  else:
+    print("we accept treatments")
+if fb<1.0:
+  fb=(1.0/fb)
+  t_fb=stats.f.ppf(1-alpha,dfe,dfb)
+  print("Table value for blocks")
+  print(t_fb)
+  print(rss,cf,st2,str2,sb2,se2,ftr,fb)
+  if fb>t_fb:
+    print("we reject blocks")
+  else:
+    print("we accept blocks")
+else:
+  print(rss,cf,st2,str2,sb2,se2,ftr,fb)
+  print("Table value for blocks")
+  t_fb=stats.f.ppf(1-alpha,dfb,dfe)
+  print(t_fb)
+  if fb>t_fb:
+    print("we reject blocks")
+  else:
+    print("we accept blocks")
