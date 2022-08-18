@@ -1,0 +1,36 @@
+#WRITE A PROGRAM TO FIND REGRESSION LINES FOR GIVEN SET OF THE DATA
+import numpy as np
+import matplotlib.pyplot as plt
+#creating the two lists l1 and l2
+l1=list(map(int,input().split()))
+l2=list(map(int,input().split()))
+x=np.array(l1)
+y=np.array(l2)
+sumx=0
+sumy=0
+n=len(x)
+#calculating total values of x and y
+for i in range(n):
+  sumx=sumx+x[i]
+  sumy=sumy+y[i]
+#calculating the mean values of x and y
+meanx=sumx/n
+meany=sumy/n
+numa=numb=dena=denb=0
+#calculating the 
+for i in range(n):
+  numa=numa+(x[i]-meanx)*(y[i]-meany)
+  dena=dena+(x[i]-meanx)*(x[i]-meanx)
+  numb=numb+(x[i]-meanx)*(y[i]-meany)
+  denb=denb+(y[i]-meany)*(y[i]-meany)
+
+m1=numa/dena
+m2=numb/denb
+c1=meany-(m1*meanx)
+c2=meanx-(m2*meany)
+print('regression line x on y is:')
+print('x=',m2,'y+',c2)
+print('regression line y on x is:')
+print('y=',m1,'x+',c1)
+plt.plot(x,m2*x+c2)
+plt.plot(y,m1*y+c1)
