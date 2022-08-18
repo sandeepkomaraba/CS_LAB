@@ -1,0 +1,37 @@
+#WRITE A PROGRAM TO FIND THE ANOVA ONE WAY CLASSIFICATION
+import scipy.stats as stats
+print("enter number of treatments:")
+t=int(input())
+print("enter the level of significance:")
+alpha=float(input())
+l=[]
+ti=[]
+ti2ni=[]
+for i in range(t):
+  p=list(map(int,input().split()))
+  ti.append(sum(p))
+  ti2ni.append((sum(p)**2)/len(p))
+  l.append(p)
+G=sum(ti)
+sti2ni=sum(ti2ni)
+m=[]
+for i in l:
+  m.extend(i)
+dft=t-1
+dfe=len(m)-t
+rss=0
+for i in m:
+  rss+=i**2
+cf=G**2/len(m)
+st2=rss-cf
+str2=sti2ni-cf
+se2=st2-str2
+mst2=str2/(t-1)
+mse2=se2/(len(m)-t)
+print(G,rss,cf,st2,str2,se2,mst2,mse2)
+f=mst2/mse2
+print('f value is:',f)
+#table value
+print('table value')
+stats.f_oneway(*l)
+print(stats.f.ppf(1-alpha,dft,dfe))
