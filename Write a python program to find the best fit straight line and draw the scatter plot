@@ -1,0 +1,41 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+x=list(map(float,input().split()))
+y=list(map(float,input().split()))
+a=[]
+b=[]
+sumx=sum(x)
+sumy=sum(y)
+xy=[]
+for i in range(0,len(x)):
+  d=x[i]*y[i]
+  xy.append(d)
+sumxy=sum(xy)
+for i in x:
+  c=i*i
+  a.append(c)
+for i in y:
+  c=i*i
+  b.append(c)
+n=len(x)
+meanx=sum(x)/n
+meany=sum(y)/n
+xsqr=sum(a)
+ysqr=sum(b)
+cov=(sumxy/n)-(meanx*meany)
+stdx=((1/n)*xsqr-(meanx*meanx))**1/2
+stdy=((1/n)*ysqr-(meany*meany))**1/2
+r=cov/(stdx*stdy)
+#regression line x on y
+rxy=r*stdx/stdy
+c=rxy*meany-meanx
+print(r,rxy,c)
+y1=np.linspace(-5,5,100)
+x1=rxy*y1+c
+plt.plot(x1,y1,'-r',label='x on y')
+plt.xlabel('x',color='#1C2833')
+plt.xlabel('y',color='#1C2833')
+plt.legend(loc='upper left')
+plt.grid()
+plt.show()
